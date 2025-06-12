@@ -10,9 +10,7 @@
 <script src="slides_files/libs/quarto-contrib/reveal-header-1.0.0/add_header.js" defer="true"></script>
 <link href="slides_files/libs/quarto-contrib/reveal-header-1.0.0/add_header.css" rel="stylesheet">
 <script src="slides_files/libs/quarto-contrib/sc-sb-title-1.0.0/sc_sb_title.js" defer="true"></script>
-<link href="slides_files/libs/quarto-contrib/grid-no-htext-1.0.0/grid_no_htext.css" rel="stylesheet">
-<script src="slides_files/libs/quarto-contrib/videojs/video.min.js"></script>
-<link href="slides_files/libs/quarto-contrib/videojs/video-js.css" rel="stylesheet"><meta charset="utf-8">
+<link href="slides_files/libs/quarto-contrib/grid-no-htext-1.0.0/grid_no_htext.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
   <title>GRTeclyn and MHDuet</title>
@@ -163,7 +161,7 @@ Miren Radia
 <div class="columns">
 <div class="column" style="width:40%;">
 <h3 id="grteclyn">GRTeclyn</h3>
-<div class="quarto-layout-panel" data-layout-nrow="2" style="text-align:center;">
+<div class="quarto-layout-panel" style="text-align:center;" data-layout-nrow="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
@@ -218,8 +216,8 @@ Miren Radia
 </div>
 </div>
 </div><div class="column" style="width:20%;">
-<h3 id="mhduet">MHDueT</h3>
-<div class="quarto-layout-panel" data-layout-nrow="2" style="text-align:center;">
+<h3 id="mhduet">MHDuet</h3>
+<div class="quarto-layout-panel" style="text-align:center;" data-layout-nrow="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -243,7 +241,7 @@ Miren Radia
 </div>
 </div><div class="column" style="width:40%;">
 <h3 id="uknr-ccp">UKNR CCP</h3>
-<div class="quarto-layout-panel" data-layout-nrow="2" style="text-align:center;">
+<div class="quarto-layout-panel" style="text-align:center;" data-layout-nrow="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
@@ -291,91 +289,126 @@ Miren Radia
 </div>
 </div></div>
 </section>
+<section id="predecessor-code-grchombo" class="slide level2 smaller">
+<h2>Predecessor code: <a href="https://github.com/GRTLCollaboration/GRChombo">GRChombo</a></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Built on the <a href="https://commons.lbl.gov/spaces/chombo/pages/73468344/Chombo+-+Software+for+Adaptive+Solutions+of+Partial+Differential+Equations">Chombo</a> libraries for “fully-adaptive” block-structured AMR</li>
+<li>Written in C++14</li>
+<li>Explicit vectorization through C++ templates to achieve good performance</li>
+<li>Hybrid MPI + OpenMP parallelization</li>
+<li>Intended for more exotic problems than most other NR codes:
+<ul>
+<li>Cosmology: Inflation, cosmic strings, etc.</li>
+<li>Boson stars/oscillatons/axion stars</li>
+<li>Modified gravity</li>
+<li>Higher-dimensional BHs</li>
+<li>Much more</li>
+</ul></li>
+</ul>
+</div><div class="column" style="text-align:center">
+<p><img data-src="media/grchombo-higherd-bh.png" height="200"></p>
+<p><img data-src="media/grchombo-string-radiation.png" height="200"></p>
+</div></div>
+</section>
+<section id="predecessor-code-mhduet-samrai-version" class="slide level2 smaller">
+<h2>Predecessor code: <a href="http://mhduet.liu.edu/">MHDuet</a> (SAMRAI version)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Automatically generated code using the <a href="https://bitbucket.org/iac3/simflowny">Simflowny</a> infrastructure</li>
+<li>Built on <a href="https://computing.llnl.gov/projects/samrai">SAMRAI</a></li>
+<li>MPI parallelism</li>
+<li>GRMHD with tabulated EoSs and high resolution shock capturing</li>
+<li>Neutrino transport</li>
+<li>Mostly used for problems involving compact object binaries:
+<ul>
+<li>Boson stars</li>
+<li>Neutron stars</li>
+<li>Black holes</li>
+</ul></li>
+<li>Often used to investigate the behaviour of the magnetic field in these problems</li>
+</ul>
+</div><div class="column" style="text-align:center">
+<p><img data-src="media/mhduet-jetformation.png" height="250" alt="A visualization of the formation of magnetically dominated jets in hypermassive neutron stars produced by a binary merger simulated using MHDueT."><br>
+</p>
+<p><img data-src="media/mhduet-unequalbs.png" height="250" alt="Visualization of four different cases of the coalescence of unequal-mass highly-compact boson stars"><br>
+</p>
+</div></div>
+</section>
 <section id="common-methods" class="slide level2 smaller">
 <h2>Common methods</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li>Discretization:
+<li>Finite difference discretization
 <ul>
-<li><strong>Finite differences</strong>
-<ul>
-<li><strong>Cell-centered</strong></li>
-<li><strong>Vertex/node-centered</strong></li>
+<li>Cell-centred (GRChombo)</li>
+<li>Node-centred (MHDuet)</li>
 </ul></li>
-<li>Finite volume (for fluids)</li>
-<li>Spectral methods</li>
-<li>Discontinuous Galerkin (DG) methods</li>
-</ul></li>
-<li>Finite-difference mesh refinement:
+<li>Block-structured AMR
 <ul>
-<li><strong>Block-structured AMR</strong>
-<ul>
-<li>“Moving boxes” for compact object binaries</li>
-<li>More adaptive for more exotic spacetimes</li>
+<li>Can emulate “moving boxes” for compact object binaries</li>
+<li>Generally something more adaptive for more exotic spacetimes</li>
+<li>Can fix some of the coarser grids to avoid regridding noise near GW extraction spheres</li>
+<li>Arbitrary refinement criterion</li>
 </ul></li>
-<li>Oct-tree AMR</li>
+<li>Method of lines
+<ul>
+<li>Fourth order Runge-Kutta time integration</li>
+<li>Fourth or sixth-order spatial discretization</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li>Method of lines
-<ul>
-<li><strong>Fourth order Runge-Kutta time integration</strong></li>
-<li><strong>Fourth or sixth-order spatial discretization</strong></li>
-</ul></li>
-<li><strong>Kreiss-Oliger dissipation</strong></li>
+<li>Kreiss-Oliger dissipation</li>
 <li>Boundary conditions:
 <ul>
-<li><strong>Outgoing radiation (Sommerfeld)</strong></li>
-<li><strong>Symmetric/reflective</strong></li>
-<li><strong>Extrapolating</strong></li>
-<li>Multipatch approaches: separate (e.g.&nbsp;spherical) outer grids</li>
+<li>Fourth order interpolation at finer level boundaries from coarser levels</li>
+<li>Outgoing radiation (Sommerfeld)</li>
+<li>Symmetric/reflective</li>
+<li>Extrapolating</li>
 </ul></li>
+<li>CCZ4 evolution system
+<ul>
+<li>Enforcement of algebraic constraints (GRChombo)</li>
+<li>Damping of algebraic constraints (MHDuet)</li>
+</ul></li>
+<li>Moving puncture gauge conditions</li>
 </ul>
 </div></div>
 </section>
-<section id="nr-codes" class="slide level2 smaller">
-<h2>NR codes</h2>
-<p>There are many NR codes/frameworks including (but by no means limited to):</p>
-<div class="columns">
-<div class="column" style="width:30%;">
-<h3 id="oct-tree-amr">Oct-tree AMR</h3>
+<section id="why-amrex" class="slide level2 smaller">
+<h2>Why <a href="https://amrex-codes.github.io/">AMReX</a>?</h2>
 <ul>
-<li><a href="https://doi.org/10.3847/1538-4365/ac157b">GR-Athena++</a></li>
-<li><a href="https://doi.org/10.1093/mnras/stab2606">Gmunu</a></li>
-<li><a href="https://paralab.github.io/Dendro-GR/">Dendro-GR</a></li>
-<li><a href="https://doi.org/10.1088/1475-7516/2020/01/007">GRAMSES</a></li>
-</ul>
-</div><div class="column" style="width:30%;">
-<h3 id="pseudo-spectraldg-codes">[Pseudo-]spectral/DG codes</h3>
+<li>Mature and performant cross-vendor (Nvidia/AMD/Intel) GPU support</li>
+<li>Similar block-structured AMR capabilities to Chombo<sup>1</sup>/SAMRAI</li>
+<li>AMReX previously received significant support as part of the US <a href="https://www.exascaleproject.org/">Exascale Computing Program</a> (ECP).
 <ul>
-<li><a href="https://www.black-holes.org/for-researchers/spec">SpEC</a>/<a href="https://spectre-code.org/">SpECTRE</a></li>
-<li><a href="https://doi.org/10.1103/PhysRevD.93.063006">bamps</a></li>
-<li><a href="https://doi.org/10.1007/s10714-021-02865-5">SFINGE</a></li>
-</ul>
-<h3 id="other">Other</h3>
-<ul>
-<li><a href="https://nrpyplus.net/">SENR/NRPy+</a></li>
-</ul>
-</div><div class="column" style="width:40%;">
-<h3 id="block-structured-amr">Block-structured AMR</h3>
-<ul>
-<li><a href="https://www.cactuscode.org/">Cactus</a>/<a href="https://www.einsteintoolkit.org/">Einstein Toolkit</a><span class="math inline">\(^{\dagger}\)</span>
-<ul>
-<li><a href="https://www.cct.lsu.edu/~eschnett/McLachlan/">McLachlan</a>, <a href="https://ccrg.rit.edu/content/software/lazev">LazEv</a>, <a href="http://dx.doi.org/10.1088/0264-9381/24/12/S04">Maya</a>, <a href="http://dx.doi.org/10.1103/PhysRevD.76.104015">Lean</a>, <a href="https://doi.org/10.5281/zenodo.3565474">Canuda</a>, …</li>
+<li>There are many AMReX applications across diverse research areas.</li>
+<li>Large user community (Slack workspace/GitHub discussions)</li>
 </ul></li>
-<li><a href="https://doi.org/10.1103/PhysRevD.54.7361">BAM</a></li>
-<li><a href="https://fpretori.scholar.princeton.edu/group-resources">PAMR/AMRD libraries</a></li>
-<li><a href="http://dx.doi.org/10.1103/PhysRevLett.96.111102">Hahndol/PARAMESH</a></li>
-<li><a href="http://dx.doi.org/10.1088/0264-9381/23/22/025">HAD</a></li>
-<li><a href="https://cwru-pat.github.io/cosmograph/">CosmoGRaPH</a></li>
-<li><a href="https://bitbucket.org/iac3/simflowny/src/master/">Simflowny</a>/<a href="http://mhduet.liu.edu/"><strong>MHDueT</strong></a><span class="math inline">\(^{\dagger}\)</span></li>
-<li><a href="https://github.com/GRTLCollaboration/GRChombo">GRChombo</a>/<a href="https://github.com/GRTLCollaboration/GRTeclyn"><strong>GRTeclyn</strong></a><span class="math inline">\(^{\dagger}\)</span></li>
+<li>AMReX is now an established project in the <a href="https://hpsf.io/">High Performance Software Foundation</a>.</li>
+<li>Helpful and very active development team:
+<ul>
+<li>In particular, Weiqun Zhang has been instrumental in helping us to get started</li>
+</ul></li>
 </ul>
-</div></div>
-<p><span class="math inline">\({\dagger}\)</span> denotes codes/frameworks that are either transitioning to or developing support for using AMReX.</p>
-</section></section>
+<div class="quarto-layout-panel" data-layout-nrow="1">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 42.9%;justify-content: center;">
+<p><img data-src="media/amrex-logo.png" width="300"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 28.6%;justify-content: center;">
+<p><img data-src="https://www.exascaleproject.org/wp-content/themes/exascale/images/ecp-logo.png" width="200"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 28.6%;justify-content: center;">
+<p><img data-src="https://hpsf.io/wp-content/uploads/sites/18/2024/11/HPSF_horizontal-tagline-color.svg" width="200"></p>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Both Chombo and AMReX originated from the same BoxLib software so APIs are very similar.</p></li></ol></aside></section></section>
 <section>
 <section id="grteclyn-1" class="title-slide slide level1 center" data-background-color="#40666e" data-background-image="media/nr-amrex-fade.png" data-background-size="contain" data-background-position="right">
 <h1>GRTeclyn</h1>
@@ -386,23 +419,20 @@ Miren Radia
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li>GRTeclyn is an in-development port of GRChombo (previously built on the Chombo libraries) to AMReX.</li>
+<li>GRTeclyn is an in-development port of GRChombo to AMReX.</li>
 <li>“Teclyn” is Welsh for “tool”.</li>
-<li>Features
+<li>Features:
 <ul>
-<li><code>Amr</code> based</li>
-<li>Cell-centered but finite-difference rather than finite-volume
-<ul>
-<li>Fourth-order cell-centered interpolator from coarse to fine (<code>CellQuartic</code>)</li>
-<li>Fourth-order interpolation from fine to coarse</li>
-</ul></li>
-<li>Fourth-order Runge-Kutta time integration</li>
-<li>Currently, just <code>BinaryBH</code> example which evolves black-hole binaries.</li>
+<li>Uses AMReX’s <code>Amr</code> framework where the management of inter-level operations is handled by AMReX (similar to GRChombo approach).</li>
+<li>Higher-order spatial interpolation between coarser and finer levels than GRChombo.</li>
+<li>Black-hole binary evolution.</li>
 <li>Designed to be flexible and easy to adapt to new problems.</li>
+<li>Familiar structure for existing GRChombo users.</li>
+<li>Tested and runs well on Nvidia, AMD and Intel GPUs</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="media/grteclyn-grchombo-bbh-comparison.mp4"></video>
+<p><video data-src="media/grteclyn-grchombo-bbh-comparison.mp4" controls=""><a href="media/grteclyn-grchombo-bbh-comparison.mp4">Video</a></video></p>
 <p><img data-src="media/grteclyn-benchmarks.svg" alt="A bar chart showing the mean walltime taken to evolve a single timestep on various different GPUs and a CPU. The results are as follows: Intel Xeon Platinum 8480 CPU (480s), Nvidia GH200 GPU (56s), AMD MI300X GPU (76s), AMD MI210 GPU (358s), Nvidia A100 GPU (105s) and Intel PVC 1550 (176s)."><br>
 </p>
 </div></div>
@@ -414,10 +444,10 @@ Miren Radia
 <ul>
 <li>Black-hole puncture tracking:
 <ul>
-<li>Allows us to track the “centers” of black hole during the simulation.</li>
-<li>Uses AMReX’s particle infrastructure.</li>
-<li>Typically 2 BHs so just 2 puncture particles so maybe overkill.</li>
-<li>Good experience for future particle use.</li>
+<li>More complicated than GRChombo due to data being GPU-resident</li>
+<li>Uses AMReX’s particle infrastructure (also on GPUs)</li>
+<li>Typically 2 BHs so just 2 puncture particles so maybe overkill</li>
+<li>Good experience for future particle use</li>
 </ul></li>
 <li>AMD MI300A hackathon:
 <ul>
@@ -425,7 +455,7 @@ Miren Radia
 <li>Legacy complicated data structure from GRChombo increases this.</li>
 <li>Refactoring led to a ~2x speedup in RHS kernels (~40% overall) on AMD MI300A APUs.</li>
 </ul></li>
-<li>Currently working on adding support for basic matter.</li>
+<li>Support for evolving scalar matter.</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div style="text-align: center">
@@ -438,39 +468,34 @@ Miren Radia
 </section></section>
 <section>
 <section id="mhduet-1" class="title-slide slide level1 center" data-background-color="#40666e" data-background-image="media/nr-amrex-fade.png" data-background-size="contain" data-background-position="right">
-<h1>MHDueT</h1>
+<h1>MHDuet</h1>
 
 </section>
 <section id="the-mhduet-code" class="slide level2 smaller">
-<h2>The MHDueT code</h2>
+<h2>The MHDuet code</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:50%;">
 <ul>
-<li>MHDueT is a code that is automatically generated using the Simflowny infrastructure.</li>
-<li>Previously used the SAMRAI library.</li>
+<li>Support has been added to Simflowny to allow it to generate MHDuet with AMReX as the AMR backend instead of SAMRAI</li>
 <li>Features
 <ul>
-<li><code>AmrCore</code> based.</li>
-<li>Mostly node-centered
-<ul>
+<li>Unlike GRTeclyn it uses AMReX’s <code>AmrCore</code> framework so more parts are implemented on the MHDuet side.</li>
+<li>Custom RK4 time integration</li>
 <li>Fifth order polynomial interpolation from coarse to fine</li>
-</ul></li>
-<li>Custom fourth order Runga-Kutta time integration</li>
-<li>Supports Magnetohydrodynamics (MHD)
-<ul>
-<li>High resolution shock capturing with WENO reconstruction</li>
-<li>Arbitrary EOS via HDF5 tabulated input</li>
-</ul></li>
-<li>Can simulate binaries of boson stars, neutron stars, black holes and more.</li>
-<li>Auto-generated using Simflowny infrastructure to enable minimal user programming.</li>
+<li>Uses FUKA/LORENE for compact binary initial data</li>
+<li>Supports most of the GRMHD features from the SAMRAI version</li>
+<li>Tested and runs well on Nvidia GPUs</li>
 </ul></li>
 </ul>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:50%;">
 <div style="text-align: center">
-<p><img data-src="media/mhduet-logo.png" height="250" alt="MHDueT logo"><br>
-</p>
-<p><img data-src="media/mhduet-jetformation.png" alt="A visualization of the formation of magnetically dominated jets in hypermassive neutron stars produced by a binary merger simulated using MHDueT."><br>
-</p>
+<!-- ![MHDueT logo](media/mhduet-logo.png){height=250}\ -->
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="media/mhduet-bs-scaling.png"></p>
+<figcaption>Strong scaling plot for the boson star code with 8 fixed mesh refinement levels on several different systems</figcaption>
+</figure>
+</div>
 </div>
 </div></div>
 </section>
@@ -511,14 +536,13 @@ Miren Radia
 </p>
 </div></div>
 </section>
-<section id="uknr-collaborative-computational-project" class="slide level2">
-<h2>UKNR Collaborative Computational Project</h2>
+<section id="uknr-ccp-benchmarking" class="slide level2">
+<h2><a href="https://www.uknumericalrelativity.org/uknr-ccp-development">UKNR CCP</a> Benchmarking</h2>
 <ul>
-<li>We have been awarded a grant to build a roadmap for the creation of a <a href="http://www.uknumericalrelativity.org/">UK Numerical Relativity</a> <a href="https://www.uknumericalrelativity.org/uknr-ccp-development">Collaborative Computational Project/Community (CCP)</a> as part of the <a href="https://www.cosec.ac.uk/">Computational Science Centre for Research Communities (CoSeC)</a> programme.</li>
-<li>This would provide long-term funding for our scientific community including shared cross-community code development.</li>
-<li>As part of the technical branch of this grant we will:
+<li>The creation of a UKNR CCP would provide long-term funding for our community including shared cross-community code development.</li>
+<li>As part of the technical component of the initial grant for the creation of this CCP, we will undertake the following:
 <ul>
-<li>Benchmark the performance of existing NR codes in use by UK researchers, and assess their readiness for future systems.</li>
+<li>Benchmark and compare the performance of existing NR codes in use by UK researchers, and assess their readiness for future systems.</li>
 <li>Identify opportunities to make data formats more interoperable and allow codes to share simulation/initial data.</li>
 <li>Investigate the possibility of developing common [analysis] tools for NR codes.</li>
 </ul></li>
@@ -545,6 +569,8 @@ Miren Radia
 </div>
 </div>
 </section>
+
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="media/cosec-stfc-header-logo.png" class="slide-logo"></p>
@@ -928,7 +954,6 @@ Miren Radia
         }
       });
       </script>
-    <script>videojs(video_shortcode_videojs_video1);</script>
     
 
 </body></html>
